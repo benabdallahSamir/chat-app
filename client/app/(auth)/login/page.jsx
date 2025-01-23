@@ -5,6 +5,8 @@ import { login as auth } from "../../../api/auth.js";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
+
+
 function Page() {
   async function login() {
     const username = document.getElementById("username").value;
