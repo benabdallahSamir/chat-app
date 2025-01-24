@@ -25,8 +25,6 @@ const ChatPage = () => {
       setMyId(isLogedIn.data.userId);
       socket.emit("add-user", isLogedIn.data.userId);
       socket.on("msg-recieve", (data) => {
-        console.log(data);
-        console.log(messages);
         setMessages((curr) => [...curr, data]);
       });
       const res = await getMessages(userId);
@@ -73,8 +71,11 @@ const ChatPage = () => {
   };
   if (messages === null || myId === null) return <ChatPageLoader />;
   return (
-    <div className="flex flex-col h-screen p-4 bg-gray-100">
-      <div className="flex-1 overflow-y-auto p-4 bg-white rounded shadow">
+    <div className="flex flex-col h-[660px] p-4 bg-gray-100">
+      <div
+        className="overflow-y-auto p-4 bg-white rounded shadow"
+        ref={container}
+      >
         {messages.map(({ message, recived, id }) => (
           <div key={id} className="mb-4">
             {recived ? (

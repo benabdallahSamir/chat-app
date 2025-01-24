@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { getAllContacts } from "@/api/messages";
 import AsideBarLoader from "./AsideBarLoader";
-import { Cpu, User } from "lucide-react";
+import { User } from "lucide-react";
 import Link from "next/link";
 const contacts = [
   { id: 1, name: "Alice" },
@@ -18,7 +18,6 @@ const AsideBar = ({ className }) => {
       switch (res.status) {
         case 200:
           setContacts(res.data.users);
-          console.log(res.data.users)
           break;
         case 204:
           setContacts([]);
@@ -38,7 +37,12 @@ const AsideBar = ({ className }) => {
     <aside
       className={`w-1/5 border px-2 pt-2 border-l h-screen border-gray-200 ${className}`}
     >
-      <h2 className="h-10 text-xl font-semibold">Contacts</h2>
+      <Link
+        className="h-10 text-xl font-semibold border-b border-gray-200 block"
+        href={"/"}
+      >
+        Contacts
+      </Link>
       {contacts.length === 0 && (
         <p className="block text-center text-xl my-auto">No contacts</p>
       )}
