@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { getAllContacts } from "@/api/messages";
 import AsideBarLoader from "./AsideBarLoader";
-import { User } from "lucide-react";
+import { Cpu, User } from "lucide-react";
 import Link from "next/link";
 const contacts = [
   { id: 1, name: "Alice" },
@@ -18,6 +18,7 @@ const AsideBar = ({ className }) => {
       switch (res.status) {
         case 200:
           setContacts(res.data.users);
+          console.log(res.data.users)
           break;
         case 204:
           setContacts([]);

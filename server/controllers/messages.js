@@ -15,7 +15,13 @@ export const addMessage = async (req, res) => {
     }).save();
 
     if (newMessage) {
-      res.status(201).send("Message sent successfully");
+      res.status(201).send({
+        message: {
+          message: newMessage.message,
+          recived: id === newMessage.sender,
+          id: newMessage._id.toString(),
+        },
+      });
     } else {
       res.status(400).send("Message could not be sent");
     }

@@ -39,3 +39,15 @@ export async function login(username, password) {
     return { status: err.response.status, message: err.response.data };
   }
 }
+
+export async function isLoggedIn() {
+  try {
+    const { status, data } = await axios.get(`${url}/isLoggedIn`, CREDENTIALS);
+
+    return { status, data };
+  } catch (err) {
+    console.log(err);
+    if (!err.response) return null;
+    return { status: err.response.status, message: err.response.data };
+  }
+}

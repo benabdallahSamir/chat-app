@@ -1,10 +1,10 @@
 export function handleUser(user) {
   if (!user) return null;
-  user.id = user._id;
-  delete user._id;
-  delete user.__v;
-  delete user.password;
-  delete user.createdAt;
-  delete user.updatedAt;
+  user._doc.id = user._doc._id;
+  delete user._doc._id;
+  delete user._doc.__v;
+  delete user._doc.password;
+  delete user._doc.createdAt;
+  delete user._doc.updatedAt;
   return user;
 }

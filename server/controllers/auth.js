@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
-import setToken from "../middlewares/jwt.js";
+import { setToken } from "../middlewares/jwt.js";
 import { handleUser } from "../middlewares/auth.js";
 
 export const register = async (req, res) => {
@@ -69,17 +69,18 @@ export const login = async (req, res) => {
     res.status(500).send({ message: "Server error" });
   }
 };
+
 export const isLoggedIn = (req, res) => {
   const token = req.cookies.token;
-
   if (!token) {
-    return res.status(401).json({ message: "Not logged in" });
+    return res.status(401).send({ message: "No token, authorization denied" });
   }
 
   try {
-    jwt.verify(token, process.env.JWT_SECRET);
-    return res.status(200).json({ message: "Logged in" });
+    const { userId } = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(userId)
+    return res.status(200).send({ userId });
   } catch (error) {
-    return res.status(401).json({ message: "Not logged in" });
+    return res.status(401).send({ message: "Token is not valid" });
   }
 };

@@ -1,11 +1,11 @@
 import express from "express";
 import { addMessage, getMessages } from "../controllers/messages.js";
-import { isLogedIn } from "../middlewares/jwt.js";
+import { isLoggedIn } from "../middlewares/jwt.js";
 
 const router = express.Router();
 
-router.post("/:userId", isLogedIn, addMessage);
+router.post("/:userId", isLoggedIn, addMessage);
 
-router.get("/:userId", isLogedIn, getMessages);
+router.get("/:userId", isLoggedIn, getMessages);
 
 export default router;

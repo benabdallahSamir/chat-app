@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./configs/mongoose.js";
 import cookieParser from "cookie-parser";
-import auth from "./routes/auth.js";
+import route from "./routes/routes.js";
 import configureSocket from "./configs/socket.js";
 
 dotenv.config();
@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/api", auth);
+app.use("/api", route);
 
 app.use("*", (_, res) => res.status(522).send("route not found"));
 
