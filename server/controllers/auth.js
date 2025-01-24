@@ -71,15 +71,9 @@ export const login = async (req, res) => {
 };
 
 export const isLoggedIn = (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).send({ message: "No token, authorization denied" });
-  }
-
   try {
-    const { userId } = jwt.verify(token, process.env.SECRET_KEY);
-    console.log(userId)
-    return res.status(200).send({ userId });
+    const { user } = req;
+    res.status(200).send(user);
   } catch (error) {
     return res.status(401).send({ message: "Token is not valid" });
   }

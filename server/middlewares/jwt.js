@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 function setToken(res, userId) {
   const token = jwt.sign({ userId: userId }, process.env.SECRET_KEY, {
@@ -7,7 +8,7 @@ function setToken(res, userId) {
   res.cookie("token", token, { httpOnly: true, secure: true });
 }
 
-function isLoggedIn(req, res, next) {
+async function isLoggedIn(req, res, next) {
   const token = req.cookies.token;
   if (!token) {
     return res.status(401).send("Access Denied");
@@ -15,7 +16,11 @@ function isLoggedIn(req, res, next) {
 
   try {
     const verified = jwt.verify(token, process.env.SECRET_KEY);
-    req.userId = verified.userId;
+    const userId = verified.userId;
+    const user = await User.findById(userId);
+    if (!user) return res.status(401).send("user not found please login");
+    req.userId = userId;
+    req.user = user;
     next();
   } catch (err) {
     res.status(400).send("Invalid Token");
